@@ -19,7 +19,7 @@ You should see something like this:
 
 ![image](https://github.com/user-attachments/assets/a46bb1e6-b3d1-4a85-9c09-79a4210eee09)
 
-At the bottom of the Gazebo window, you will see the ```Real time factor```, if this number is below 0.5 (assuming you are not running anything else heavy on your VM or on your computer), this means that your simulation will likely be quite slow, and you may want to consider utilizing one of the alternative systems proposed (you may still use your system for code development and connecting with the real robot, just the testing in simulation might be slow).
+At the bottom of the Gazebo window, you will see the ```Real Time Factor```, if this number is consistently below 0.5 (assuming you are not running anything else heavy on your VM or on your computer), this means that your simulation will likely be quite slow, and you may want to consider utilizing one of the alternative systems proposed (you may still use your system for code development and connecting with the real robot, just the testing in simulation might be slow).
 
 
 ## To check the latency of the topics in TurtleBot4s

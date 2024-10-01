@@ -21,7 +21,6 @@ from rclpy.time import Time
 # import ...
 
 
-
 CIRCLE=0; SPIRAL=1; ACC_LINE=2
 motion_types=['circle', 'spiral', 'line']
 

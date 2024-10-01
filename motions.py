@@ -52,15 +52,15 @@ class motion_executioner(Node):
 
         # TODO Part 5: Create below the subscription to the topics corresponding to the respective sensors
         # IMU subscription
-        
+        self.subscription=self.create_subscription(Imu, "/imu", self.sub_callback, 10)
         ...
         
         # ENCODER subscription
-
         ...
         
         # LaserScan subscription 
-        
+        self.subscription=self.create_subscription(LaserScan, "/laser", self.sub_callback, 10)
+
         ...
         
         self.create_timer(0.1, self.timer_callback)
@@ -112,19 +112,22 @@ class motion_executioner(Node):
     # TODO Part 4: Motion functions: complete the functions to generate the proper messages corresponding to the desired motions of the robot
 
     def make_circular_twist(self):
-        
         msg=Twist()
-        ... # fill up the twist msg for circular motion
+        msg.linear.x = 0.5
+        msg.angular.z = 0.7
         return msg
 
     def make_spiral_twist(self):
         msg=Twist()
-        ... # fill up the twist msg for spiral motion
+        self.increment += 0.01 # spiral = increase linear speed, constant angular speed
+        msg.linear.x = self.increment
+        msg.angular.z = 0.7
         return msg
     
     def make_acc_line_twist(self):
         msg=Twist()
-        ... # fill up the twist msg for line motion
+        msg.linear.x = 0.5
+        msg.angular.z = 0
         return msg
 
 import argparse

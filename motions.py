@@ -10,6 +10,7 @@ from rclpy.qos import QoSProfile
     # For sending velocity commands to the robot: Twist
     # For the sensors: Imu, LaserScan, and Odometry
 # Check the online documentation to fill in the lines below
+# Imported Correct Libraries
 from geometry_msgs.msg  import Twist
 from sensor_msgs.msg import Imu
 from sensor_msgs.msg import LaserScan
@@ -40,6 +41,7 @@ class motion_executioner(Node):
         self.laser_initialized=False
         
         # TODO Part 3: Create a publisher to send velocity commands by setting the proper parameters in (...)
+        #Created publisher to send velocity commands - publishing to /cmd_vel topic
         self.vel_publisher=self.create_publisher(Twist, '/cmd_vel', 10)
                 
         # loggers

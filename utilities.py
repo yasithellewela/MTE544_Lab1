@@ -28,7 +28,6 @@ class Logger:
             # ...
             
             vals_str+="\n"
-            
             file.write(vals_str)
             
 

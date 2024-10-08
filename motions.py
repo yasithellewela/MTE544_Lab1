@@ -52,15 +52,15 @@ class motion_executioner(Node):
 
         # TODO Part 5: Create below the subscription to the topics corresponding to the respective sensors
         # IMU subscription
-        self.subscription=self.create_subscription(Imu, "/imu", self.imu_callback, 10)
+        self.subscription=self.create_subscription(Imu, "/imu", self.imu_callback, qos)
         # ...
         
         # ENCODER subscription
-        self.subscription=self.create_subscription(Odometry, "/odom", self.odom_callback,10)
+        self.subscription=self.create_subscription(Odometry, "/odom", self.odom_callback,qos)
         # ...
         
         # LaserScan subscription 
-        self.subscription=self.create_subscription(LaserScan, "/scan", self.laser_callback, 10)
+        self.subscription=self.create_subscription(LaserScan, "/scan", self.laser_callback, qos)
         # ...
         
         self.create_timer(0.1, self.timer_callback)
@@ -75,6 +75,8 @@ class motion_executioner(Node):
     # You can save the needed fields into a list, and pass the list to the log_values function in utilities.py
 
     def imu_callback(self, imu_msg: Imu):
+        self.imu_initialized=True
+
         timestamp = Time.from_msg(imu_msg.header.stamp).nanoseconds
         angular_velocity_z = imu_msg.angular_velocity.z
 
@@ -85,6 +87,7 @@ class motion_executioner(Node):
         self.imu_logger.log_values(log)
         
     def odom_callback(self, odom_msg: Odometry):
+        self.odom_initialized=True
         timestamp = Time.from_msg(odom_msg.header.stamp).nanoseconds
         position_x = odom_msg.pose.pose.position.x
         position_y = odom_msg.pose.pose.position.y
@@ -94,6 +97,7 @@ class motion_executioner(Node):
         self.odom_logger.log_values(log)
                 
     def laser_callback(self, laser_msg: LaserScan):
+        self.laser_initialized=True
         timestamp = Time.from_msg(laser_msg.header.stamp).nanoseconds
         ranges = laser_msg.ranges
         angle_increment = laser_msg.angle_increment
@@ -130,13 +134,13 @@ class motion_executioner(Node):
 
     def make_circular_twist(self):
         msg=Twist()
-        msg.linear.x = 1.0
+        msg.linear.x = 0.25
         msg.angular.z = 1.0
         return msg
 
     def make_spiral_twist(self):
         msg=Twist()
-        self.increment += 0.01 # spiral = increase linear speed, constant angular speed
+        self.increment += 0.005 # spiral = increase linear speed, constant angular speed
         msg.linear.x = self.increment
         msg.angular.z = 1.0
         return msg

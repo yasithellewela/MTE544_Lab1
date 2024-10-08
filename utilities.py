@@ -24,6 +24,7 @@ class Logger:
             vals_str=""
 
             # TODO Part 5: Write the values from the list to the file
+            #Write the values into the file
             vals_str = ", ".join(map(str, values_list))
             # ...
             

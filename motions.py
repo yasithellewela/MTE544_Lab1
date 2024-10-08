@@ -68,7 +68,7 @@ class motion_executioner(Node):
         
         self.create_timer(0.1, self.timer_callback)
 
-        #Created a class member to increment
+        #Created a class member to increment linear velocity for the spiral movement
         self.increment = 0.0
 
 
@@ -79,9 +79,12 @@ class motion_executioner(Node):
     # You can save the needed fields into a list, and pass the list to the log_values function in utilities.py
 
     def imu_callback(self, imu_msg: Imu):
+        #Set the initialization to true since the sensor callback is successful resulting in the timer callback initialization
         self.imu_initialized=True
 
+        #Acquire timestamp and required plot and log parameters
         timestamp = Time.from_msg(imu_msg.header.stamp).nanoseconds
+
         angular_velocity_z = imu_msg.angular_velocity.z
 
         linear_acceleration_x = imu_msg.linear_acceleration.x
@@ -91,20 +94,33 @@ class motion_executioner(Node):
         self.imu_logger.log_values(log)
         
     def odom_callback(self, odom_msg: Odometry):
+        #Set the initialization to true since the sensor callback is successful resulting in the timer callback initialization
         self.odom_initialized=True
+
+        #Acquire timestamp and required plot and log parameters
         timestamp = Time.from_msg(odom_msg.header.stamp).nanoseconds
+
         position_x = odom_msg.pose.pose.position.x
         position_y = odom_msg.pose.pose.position.y
+
         orientation = odom_msg.pose.pose.orientation
+
         theta = euler_from_quaternion(orientation)
+
         log = [position_x, position_y, theta, timestamp]
         self.odom_logger.log_values(log)
                 
     def laser_callback(self, laser_msg: LaserScan):
+        #Set the initialization to true since the sensor callback is successful resulting in the timer callback initialization
         self.laser_initialized=True
+
+        #Acquire timestamp and required plot and log parameters
         timestamp = Time.from_msg(laser_msg.header.stamp).nanoseconds
+
         ranges = laser_msg.ranges
+
         angle_increment = laser_msg.angle_increment
+
         log = ranges.tolist() + [angle_increment, timestamp]
         self.laser_logger.log_values(log)
                 
@@ -137,12 +153,14 @@ class motion_executioner(Node):
     # TODO Part 4: Motion functions: complete the functions to generate the proper messages corresponding to the desired motions of the robot
 
     def make_circular_twist(self):
+        #Set the linear and angular velocity such that the radius is 0.25m
         msg=Twist()
         msg.linear.x = 0.25
         msg.angular.z = 1.0
         return msg
 
     def make_spiral_twist(self):
+        #Setting the linear and angular velocity such that the radius increases by 0.005m 
         msg=Twist()
         self.increment += 0.005 # spiral = increase linear speed, constant angular speed
         msg.linear.x = self.increment
@@ -150,6 +168,7 @@ class motion_executioner(Node):
         return msg
     
     def make_acc_line_twist(self):
+        #Setting the linear velocity to 1 so the robot moves straight
         msg=Twist()
         msg.linear.x = 1.0
         msg.angular.z = 0.0

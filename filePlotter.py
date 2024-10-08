@@ -25,6 +25,7 @@ def plot_errors(filename):
     plt.show()
 
 def plot_laser(filename):
+    #Function to plot laser data
     headers, values=FileReader(filename).read_file() 
     time_list=[]
     first_stamp=values[0][-1]

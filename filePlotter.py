@@ -21,8 +21,12 @@ def plot_errors(filename):
     
     #plt.plot([lin[0] for lin in values], [lin[1] for lin in values])
     plt.legend()
+    plt.xlabel('Time (ns)')
+    plt.ylabel('Acceleration (m/s^2)')
+    plt.title('LIDAR Output: Spiral')
     plt.grid()
     plt.show()
+
 
 def plot_laser(filename):
     #Function to plot laser data
@@ -49,6 +53,10 @@ def plot_laser(filename):
 
     plt.scatter(x, y)
 
+    plt.xlabel('X-distance (m)')
+    plt.ylabel('Y-distance (m)')
+    plt.title('LIDAR Output: Spiral')
+
     plt.show()
     
 import argparse
@@ -64,5 +72,5 @@ if __name__=="__main__":
 
     filenames=args.files
     for filename in filenames:
-        plot_errors(filename)
-        # plot_laser(filename)
+        # plot_errors(filename)
+        plot_laser(filename)

@@ -4,6 +4,8 @@
 
 import matplotlib.pyplot as plt
 from utilities import FileReader
+import math
+import numpy  as np
 
 def plot_errors(filename):
     
@@ -21,6 +23,32 @@ def plot_errors(filename):
     plt.legend()
     plt.grid()
     plt.show()
+
+def plot_laser(filename):
+    headers, values=FileReader(filename).read_file() 
+    time_list=[]
+    first_stamp=values[0][-1]
+
+    for val in values:
+        time_list.append(val[-1] - first_stamp)
+
+
+    increm = values[0][-2]  
+    
+    ranges = np.array(values[0][:-2])
+    ang = 0
+    x = []
+    y = []
+
+    for val in ranges:
+        x.append(val*math.cos(ang)) 
+        y.append(val*math.sin(ang)) 
+        ang += increm
+
+
+    plt.scatter(x, y)
+
+    plt.show()
     
 import argparse
 
@@ -36,3 +64,4 @@ if __name__=="__main__":
     filenames=args.files
     for filename in filenames:
         plot_errors(filename)
+        # plot_laser(filename)

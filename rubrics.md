@@ -22,8 +22,8 @@
 
 ## Part 5: 20 marks
 **From Report on LEARN:**
-- ```10``` marks for plots with title, label name for axis, legends, different shapes/colors for each data, and grids.
-  - For P and PID: {e-t, edot-t}, and {x-t, y-t, th-t}, and {x-y}, {e-edot}.
+- ```2``` marks for plots with title, label name for axis, legends, different shapes/colors for each data, and grids.
+- ```8``` marks for plots for P and PID: {e-t, edot-t}, and {x-t, y-t, th-t}, and {x-y}, {e-edot}.
 - ```10``` marks for showing the tunning process.
 
 ## Part 6: 20 marks
@@ -36,6 +36,6 @@
 ## Conclusions: 25 marks
 **From Report on LEARN:**
 - ```1``` mark for names (Family Name, First Name); student IDs; station number; and robot number of all group members.
-- ```6``` marks for plots of Part 6 {x-y} for parabola and sigmoid (2 plots).
+- ```6``` marks for plots of Part 6 {x-y} for parabola and sigmoid (2 plots), of which ```2``` marks for title, label name for axis, legends, different shapes/colors for each data, and grids.
 - ```8``` marks for stability analysis of each controller (overshoot, oscillations, response time, etc.).
 - ```10``` marks for discussion (comparison between controllers in the light of parameters calculated in stability analysis).

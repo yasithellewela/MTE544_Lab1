@@ -15,6 +15,7 @@
 **From Code Submission on LEARN:** 
 - ```3``` marks for correct completion of ```pid.py```, ```utilities.py```, ```controller.py```, and, ```decision.py```.
 > 3 x 4 = 12 marks
+
 **In-Lab:** ```8``` marks for testing Point Controller
 
 - If you did not show the motions in the lab to a TA, then you get ```4``` marks (50% off) if you have the plots in the report.
@@ -22,8 +23,7 @@
 ## Part 5: 20 marks
 **From Report on LEARN:**
 - ```10``` marks for each plot with title, label name for axis, legends, different shapes/colors for each data, and grids.
-  - For P and PID: {e-t, edot-t}, and {x-t, y-t, th-t}, and {x-y}, {e-edot} (4 plots each).
-  - For the PID controller chosen for Part 6 {x-y} for parabola and sigmoid (2 plots).
+  - For P and PID: {e-t, edot-t}, and {x-t, y-t, th-t}, and {x-y}, {e-edot}.
 - ```10``` marks for showing the tunning process.
 
 ## Part 6: 20 marks
@@ -31,10 +31,11 @@
 - ```10``` marks for each trajectory: ```0``` for inexecutable code, ```5``` for incorrect motion, and ```8``` for jerky trajectories.
 - If you did not show the motions in the lab to a TA, then you get ```5``` marks (50% off) for each trajectory shown in the plots in the report.
 
-> 10 x 2 = 20
+> 10 x 2 = 20 marks
   
 ## Conclusions: 25 marks
 **From Report on LEARN:**
 - ```1``` mark for names (Family Name, First Name); student IDs; station number; and robot number of all group members.
-- ```7``` marks for stability anyalsis of each controller (overshoot, oscillations, response time, etc.).
-- ```10``` marks for dicussion (comparison between controllers in the light of parameters calculated in stability analysis).
+- ```6``` marks for plots of Part 6 {x-y} for parabola and sigmoid (2 plots).
+- ```8``` marks for stability analysis of each controller (overshoot, oscillations, response time, etc.).
+- ```10``` marks for discussion (comparison between controllers in the light of parameters calculated in stability analysis).

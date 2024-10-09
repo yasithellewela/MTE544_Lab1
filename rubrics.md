@@ -21,7 +21,9 @@
 
 ## Part 5: 20 marks
 **From Report on LEARN:**
-- ```10``` marks for plots with title, label name for axis, legends, different shapes/colors for each data, and grids.
+- ```10``` marks for each plot with title, label name for axis, legends, different shapes/colors for each data, and grids.
+  - For P and PID: {e-t, edot-t}, and {x-t, y-t, th-t}, and {x-y}, {e-edot} (4 plots each).
+  - For the PID controller chosen for Part 6 {x-y} for parabola and sigmoid (2 plots).
 - ```10``` marks for showing the tunning process.
 
 ## Part 6: 20 marks

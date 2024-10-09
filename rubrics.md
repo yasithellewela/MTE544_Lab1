@@ -22,7 +22,7 @@
 
 ## Part 5: 20 marks
 **From Report on LEARN:**
-- ```10``` marks for each plot with title, label name for axis, legends, different shapes/colors for each data, and grids.
+- ```10``` marks for plots with title, label name for axis, legends, different shapes/colors for each data, and grids.
   - For P and PID: {e-t, edot-t}, and {x-t, y-t, th-t}, and {x-y}, {e-edot}.
 - ```10``` marks for showing the tunning process.
 

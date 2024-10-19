@@ -62,7 +62,8 @@ class decision_maker(Node):
     def timerCallback(self):
         
         # TODO Part 3: Run the localization node
-        ...    # Remember that this file is already running the decision_maker node.
+        # ...    # Remember that this file is already running the decision_maker node.
+        spin_once(self.localizer)
 
         if self.localizer.getPose()  is  None:
             print("waiting for odom msgs ....")
@@ -72,10 +73,19 @@ class decision_maker(Node):
         
         # TODO Part 3: Check if you reached the goal
         if type(self.goal) == list:
-            reached_goal=...
+            goal_pose = self.goal[-1]
         else: 
-            reached_goal=...
-        
+            goal_pose = self.goal
+
+        current_pose = self.localizer.getPose()
+        error_linear = calculate_linear_error(current_pose, goal_pose)
+        error_angular = calculate_angular_error(current_pose, goal_pose)
+
+        if abs(error_angular) <= 0.1 & abs(error_linear) <= 0.1: 
+            reached_goal = True
+        else:
+            reached_goal = False
+
 
         if reached_goal:
             print("reached goal")
@@ -85,7 +95,10 @@ class decision_maker(Node):
             self.controller.PID_linear.logger.save_log()
             
             #TODO Part 3: exit the spin
-            ... 
+            try:
+                spin(self)
+            except SystemExit:
+                print(f"reached there successfully {self.localizer.pose}")
         
         velocity, yaw_rate = self.controller.vel_request(self.localizer.getPose(), self.goal, True)
 

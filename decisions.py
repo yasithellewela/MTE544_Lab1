@@ -83,7 +83,7 @@ class decision_maker(Node):
         error_linear = calculate_linear_error(current_pose, goal_pose)
         error_angular = calculate_angular_error(current_pose, goal_pose)
 
-        if abs(error_angular) <= 0.1 and abs(error_linear) <= 0.2: 
+        if abs(error_angular) <= 0.05 and abs(error_linear) <= 0.1: 
             reached_goal = True
         else:
             reached_goal = False
@@ -127,11 +127,11 @@ def main(args=None):
     # TODO Part 4: instantiate the decision_maker with the proper parameters for moving the robot
     if args.motion.lower() == "point":
         ####################################################################################################################
-        DM=decision_maker(publisher_msg, publishing_topic, 10, goalPoint, rate=10, motion_type=POINT_PLANNER) 
+        DM=decision_maker(publisher_msg, publishing_topic, odom_qos, goalPoint, rate=10, motion_type=POINT_PLANNER) 
         ####################################################################################################################
     elif args.motion.lower() == "trajectory":
         ####################################################################################################################
-        DM=decision_maker(publisher_msg, publishing_topic, 10, goalPoint, rate=10, motion_type=TRAJECTORY_PLANNER)
+        DM=decision_maker(publisher_msg, publishing_topic, odom_qos, goalPoint, rate=10, motion_type=TRAJECTORY_PLANNER)
         ####################################################################################################################
     else:
         print("invalid motion type", file=sys.stderr)        

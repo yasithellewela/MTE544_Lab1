@@ -31,13 +31,14 @@ class decision_maker(Node):
         super().__init__("decision_maker")
 
         #TODO Part 4: Create a publisher for the topic responsible for robot's motion
+        # Create publisher
         self.publisher=self.create_publisher(publisher_msg, publishing_topic, qos_publisher)
 
         publishing_period=1/rate
         
         # Instantiate the controller
         # TODO Part 5: Tune your parameters here
-    
+        # Parameter tuning
         if motion_type == POINT_PLANNER:
             self.controller=controller(klp=0.25, klv=0.5, kli=0.2, kap=0.8, kav=0.1, kai=0.2)
             self.planner=planner(POINT_PLANNER)    
@@ -74,11 +75,13 @@ class decision_maker(Node):
         vel_msg=Twist()
         
         # TODO Part 3: Check if you reached the goal
+        # Check for trajectory or point
         if type(self.goal) == list:
             goal_pose = self.goal[-1]
         else: 
             goal_pose = self.goal
 
+        # Check if errors are within some range
         current_pose = self.localizer.getPose()
         error_linear = calculate_linear_error(current_pose, goal_pose)
         error_angular = calculate_angular_error(current_pose, goal_pose)
@@ -97,6 +100,7 @@ class decision_maker(Node):
             self.controller.PID_linear.logger.save_log()
             
             #TODO Part 3: exit the spin
+            # exit the spin
             try:
                 spin(self)
             except SystemExit:
@@ -105,9 +109,10 @@ class decision_maker(Node):
         velocity, yaw_rate = self.controller.vel_request(self.localizer.getPose(), self.goal, True)
 
         #TODO Part 4: Publish the velocity to move the robot
+        # publish the velocities
         vel_msg.linear.x = velocity
         vel_msg.angular.z = yaw_rate
-        self.publisher.publish(vel_msg) # MIGHT NOT BE RIGHT
+        self.publisher.publish(vel_msg)
 
 import argparse
 
@@ -126,13 +131,11 @@ def main(args=None):
     goalPoint = [1.0, -1.0]
     # TODO Part 4: instantiate the decision_maker with the proper parameters for moving the robot
     if args.motion.lower() == "point":
-        ####################################################################################################################
+        # Initiate decision maker for point
         DM=decision_maker(publisher_msg, publishing_topic, odom_qos, goalPoint, rate=10, motion_type=POINT_PLANNER) 
-        ####################################################################################################################
     elif args.motion.lower() == "trajectory":
-        ####################################################################################################################
+        # Initiate decision maker for trajectory
         DM=decision_maker(publisher_msg, publishing_topic, odom_qos, goalPoint, rate=10, motion_type=TRAJECTORY_PLANNER)
-        ####################################################################################################################
     else:
         print("invalid motion type", file=sys.stderr)        
     

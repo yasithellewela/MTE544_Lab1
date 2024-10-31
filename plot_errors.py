@@ -39,9 +39,8 @@ def plot_pose(filename , u=0):
 
     plt.show()
 
-
+# Plot errors
 def plot_errors(iteration):
-    # File naming convention for linear and angular errors
     linear_file = f"linear copy {iteration}.csv"
     angular_file = f"angular copy {iteration}.csv"
 
@@ -49,7 +48,6 @@ def plot_errors(iteration):
     linear_headers, linear_values = FileReader(linear_file).read_file()
     angular_headers, angular_values = FileReader(angular_file).read_file()
 
-    # Extract timestamps and normalize time
     first_linear_stamp = linear_values[0][-1]
     first_angular_stamp = angular_values[0][-1]
     
@@ -91,6 +89,7 @@ import argparse
 
 if __name__=="__main__":
 
+    # Plot errors
     iteration = 4
     plot_errors(iteration)
     plot_pose(f"robot_pose copy {iteration}.csv")

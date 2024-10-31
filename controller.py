@@ -29,7 +29,7 @@ class controller:
         angular_vel=self.PID_angular.update([e_ang, pose[3]], status)
         
         # TODO Part 4: Add saturation limits for the robot linear and angular velocity
-
+        # Added saturation limits
         linear_vel = 0.31 if linear_vel > 0.31 else linear_vel #0.31 safe or 0.46 unsafe
         angular_vel= 1.9 if angular_vel > 1.9 else angular_vel #1.9
         
@@ -56,7 +56,7 @@ class trajectoryController(controller):
         angular_vel=self.PID_angular.update([e_ang, pose[3]], status) 
 
         # TODO Part 5: Add saturation limits for the robot linear and angular velocity
-
+        # Added saturation limits
         linear_vel = 0.31 if linear_vel > 0.31 else linear_vel #0.31 safe or 0.46 unsafe
         angular_vel= 1.9 if angular_vel > 1.9 else angular_vel #1.9
         

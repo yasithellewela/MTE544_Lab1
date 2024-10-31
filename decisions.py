@@ -39,12 +39,12 @@ class decision_maker(Node):
         # TODO Part 5: Tune your parameters here
     
         if motion_type == POINT_PLANNER:
-            self.controller=controller(klp=0.2, klv=0.5, kap=0.8, kav=0.6)
+            self.controller=controller(klp=0.25, klv=0.5, kli=0.2, kap=0.8, kav=0.1, kai=0.2)
             self.planner=planner(POINT_PLANNER)    
     
     
         elif motion_type==TRAJECTORY_PLANNER:
-            self.controller=trajectoryController(klp=0.2, klv=0.5, kap=0.8, kav=0.6)
+            self.controller=trajectoryController(klp=0.25, klv=0.25, kli=0.2, kap=0.65, kav=0.45, kai=0.2)
             self.planner=planner(TRAJECTORY_PLANNER)
 
         else:
@@ -83,7 +83,7 @@ class decision_maker(Node):
         error_linear = calculate_linear_error(current_pose, goal_pose)
         error_angular = calculate_angular_error(current_pose, goal_pose)
 
-        if abs(error_angular) <= 0.05 and abs(error_linear) <= 0.1: 
+        if abs(error_angular) <= 0.15 and abs(error_linear) <= 0.02: 
             reached_goal = True
         else:
             reached_goal = False

@@ -37,8 +37,8 @@ class localization(Node):
         #Acquire timestamp and required plot and log parameters
         timestamp = pose_msg.header.stamp
 ####################################################################################################################
-        position_x = pose_msg.pose.pose.position.x + 2
-        position_y = pose_msg.pose.pose.position.y + 0.5
+        position_x = pose_msg.pose.pose.position.x
+        position_y = pose_msg.pose.pose.position.y
 ####################################################################################################################
         orientation = pose_msg.pose.pose.orientation
 

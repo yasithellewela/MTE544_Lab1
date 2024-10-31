@@ -79,7 +79,7 @@ def plot_errors(iteration):
     axes[1].plot(angular_time, angular_e, label="Angular e", linestyle='--')
     axes[1].plot(angular_time, angular_e_dot, label="Angular e_dot", linestyle='--')
     axes[1].set_xlabel("Time")
-    axes[0].set_ylabel("errors")
+    axes[1].set_ylabel("errors")
     axes[1].set_title("Error Variables Against Time")
     axes[1].legend()
     axes[1].grid()
@@ -91,7 +91,7 @@ import argparse
 
 if __name__=="__main__":
 
-    iteration = 6
+    iteration = 4
     plot_errors(iteration)
     plot_pose(f"robot_pose copy {iteration}.csv")
 

@@ -43,6 +43,8 @@ class decision_maker(Node):
         elif motion_type==TRAJECTORY_PLANNER:
             self.controller=trajectoryController(klp=0.2, klv=0.5, kap=0.8, kav=0.6)      
             self.planner=planner(TRAJECTORY_PLANNER)
+            
+            
         elif motion_type==SPIRAL_4TUNE:
             self.controller=None
             self.planner=None

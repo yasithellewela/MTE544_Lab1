@@ -88,10 +88,10 @@ class localization(Node):
         # Return x, y, theta, and stamp
 
         self.pose=np.array(            
-            xhat[0],  
+            [xhat[0],  
             xhat[1],  
             xhat[2],  
-            odom_msg.header.stamp)
+            odom_msg.header.stamp])
 
         # TODO Part 4: log your data
         # From loggerHeaders in Tutorial 6

@@ -46,7 +46,7 @@ class kalman_filter:
             v,# v
             w,# w
             vdot, # ax
-            0, # ay
+            v*w, # ay
         ])
         
     # TODO Part 3: Impelment the motion model (state-transition matrice)
@@ -90,7 +90,7 @@ class kalman_filter:
             [0,0,0  , 0, 1, 0], # v
             [0,0,0  , 1, 0, 0], # w
             [0,0,0  , 0, 0, 1], # ax
-            [0,0,0  , 0, 0, 0], # ay
+            [0,0,0  , v, w, 0], # ay
         ])
         
     # TODO Part 3: return the states here    

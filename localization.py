@@ -25,7 +25,7 @@ odom_qos=QoSProfile(reliability=2, durability=2, history=1, depth=10)
 
 class localization(Node):
     
-    def __init__(self, type, dt, loggerName="robotPose.csv", loggerHeaders=["imu_ax", "imu_ay", "kf_ax", "kf_ay","kf_vx","kf_w","kf_x", "kf_y","stamp"]):
+    def __init__(self, type, dt, loggerName="robotPose.csv", loggerHeaders=["imu_ax", "imu_ay", "kf_ax", "kf_ay","kf_vx","kf_w","kf_x", "kf_y","odom_x","odom_y","odom_th","odom_vx","odom_vy","odom_w","stamp"]):
 
         super().__init__("localizer")
 
@@ -49,9 +49,9 @@ class localization(Node):
         
         x= np.zeros(6)
         
-        Q= np.diag([1,1,1,1,1,1])*0.5
+        Q= np.diag([1,1,1,1,1,1])*0.7
 
-        R= np.diag([1,1,1,1])*0.5
+        R= np.diag([1,1,1,1])*0.3
         
         P= Q # initial covariance
         #P = np.diag([1,1,1,1,1,1])  # initial covariance
@@ -59,8 +59,8 @@ class localization(Node):
         self.kf=kalman_filter(P,Q,R, x, dt)
         
         # TODO Part 3: Use the odometry and IMU data for the EKF
-        self.odom_sub=message_filters.Subscriber(self, odom, "/odom")
-        self.imu_sub=message_filters.Subscriber(self, Imu, "/imu")
+        self.odom_sub=message_filters.Subscriber(self, odom, "/odom", qos_profile=odom_qos)
+        self.imu_sub=message_filters.Subscriber(self, Imu, "/imu", qos_profile=odom_qos)
         
         time_syncher=message_filters.ApproximateTimeSynchronizer([self.odom_sub, self.imu_sub], queue_size=10, slop=0.1)
         time_syncher.registerCallback(self.fusion_callback)
@@ -95,16 +95,24 @@ class localization(Node):
 
         # TODO Part 4: log your data
         # From loggerHeaders in Tutorial 6
+        # loggerHeaders=["imu_ax", "imu_ay", "kf_ax", "kf_ay","kf_vx","kf_w","kf_x", "kf_y","stamp"]):
+        #x, y,th, w, v,vdot
         self.loc_logger.log_values(
             [imu_msg.linear_acceleration.x,
             imu_msg.linear_acceleration.y,
-            xhat[3],  # kf_ax
-            xhat[4],  # kf_ay
-            xhat[5],  # kf_vx
-            xhat[2],  # kf_w
+            xhat[5],  # kf_ax
+            xhat[4] * xhat[3],  # kf_ay 
+            xhat[4],  # kf_vx
+            xhat[3],  # kf_w
             xhat[0],  # kf_x
             xhat[1],  # kf_y
-            odom_msg.header.stamp])
+            odom_msg.pose.pose.position.x,
+            odom_msg.pose.pose.position.y,
+            euler_from_quaternion(odom_msg.pose.pose.orientation),
+            odom_msg.twist.twist.linear.x,
+            odom_msg.twist.twist.linear.y,
+            odom_msg.twist.twist.angular.z,
+            Time.from_msg(odom_msg.header.stamp).nanoseconds])
       
     def odom_callback(self, pose_msg):
         

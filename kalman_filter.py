@@ -1,7 +1,6 @@
 import numpy as np
 
 
-
 # TODO Part 3: Comment the code explaining each part
 class kalman_filter:
     
@@ -54,7 +53,7 @@ class kalman_filter:
         
         x, y, th, w, v, vdot = self.x
         dt = self.dt
-        
+        # Setup motion model
         self.x = np.array([
             x + v * np.cos(th) * dt,
             y + v * np.sin(th) * dt,
@@ -70,7 +69,7 @@ class kalman_filter:
     def jacobian_A(self):
         x, y, th, w, v, vdot = self.x
         dt = self.dt
-        
+        # Return A matrix
         return np.array([
             #x, y,               th, w,             v, vdot
             [1, 0,                0, 0,          np.cos(th)*dt,  0],

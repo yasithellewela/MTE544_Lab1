@@ -47,6 +47,7 @@ class localization(Node):
         
         # TODO Part 3: Set up the quantities for the EKF (hint: you will need the functions for the states and measurements)
         
+        #Initialize x Q R and P
         x= np.zeros(6)
         
         Q= np.diag([1,1,1,1,1,1])*0.7
@@ -59,6 +60,7 @@ class localization(Node):
         self.kf=kalman_filter(P,Q,R, x, dt)
         
         # TODO Part 3: Use the odometry and IMU data for the EKF
+        # Set up odom and imu subscriptions 
         self.odom_sub=message_filters.Subscriber(self, odom, "/odom", qos_profile=odom_qos)
         self.imu_sub=message_filters.Subscriber(self, Imu, "/imu", qos_profile=odom_qos)
         
@@ -72,6 +74,8 @@ class localization(Node):
         # your measurements are the linear velocity and angular velocity from odom msg
         # and linear acceleration in x and y from the imu msg
         # the kalman filter should do a proper integration to provide x,y and filter ax,ay
+
+        # Set z up 
         z=[odom_msg.twist.twist.linear.x,
            odom_msg.twist.twist.angular.z,
            imu_msg.linear_acceleration.x,
@@ -86,7 +90,6 @@ class localization(Node):
 
         # Update the pose estimate to be returned by getPose
         # Return x, y, theta, and stamp
-
         self.pose=np.array(            
             [xhat[0],  
             xhat[1],  
@@ -115,7 +118,7 @@ class localization(Node):
             Time.from_msg(odom_msg.header.stamp).nanoseconds])
       
     def odom_callback(self, pose_msg):
-        
+        # Return odom pose data
         self.pose=[ pose_msg.pose.pose.position.x,
                     pose_msg.pose.pose.position.y,
                     euler_from_quaternion(pose_msg.pose.pose.orientation),

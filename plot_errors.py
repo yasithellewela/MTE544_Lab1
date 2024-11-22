@@ -19,10 +19,22 @@ def plot_errors(filename):
     
     fig, axes = plt.subplots(2,1, figsize=(14,6))
 
+    
+    # Predicted vals from KF 
+    predicted_x = [lin[len(headers) - 9] for lin in values]
+    predicted_y = [lin[len(headers) - 8] for lin in values]
 
-    axes[0].plot([lin[len(headers) - 7] for lin in values], [lin[len(headers) - 6] for lin in values])
-    axes[0].set_title("state space")
+    # Actual vals from odom
+    actual_x = [lin[len(headers) - 7] for lin in values] 
+    actual_y = [lin[len(headers) - 6] for lin in values] 
+
+    # First plot: Overlayed state space
+    axes[0].plot(predicted_x, predicted_y, label="Predicted Path", color="blue")
+    axes[0].plot(actual_x, actual_y, label="Actual Path", color="red")
+    axes[0].set_title("State Space: Predicted vs Actual Path")
     axes[0].grid()
+    axes[0].legend()
+    
 
     
     axes[1].set_title("each individual state")

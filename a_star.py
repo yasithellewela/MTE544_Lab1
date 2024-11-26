@@ -66,12 +66,13 @@ def search(maze, start, end):
     # Use None as parent if not defined
     start_node = Node(None, start)
     start_node.g = 0     # cost from start Node
-    start_node.h = sqrt((start[0] - end[0]) ** 2 + (start[1] - end[1]) ** 2)     # heuristic estimated cost to end Node
+    # start_node.h = abs(start[0] - end[0]) + abs(start[1] - end[1]) # herusitic estimated cost to end Node (Manhattan)
+    start_node.h = sqrt((start[0] - end[0]) ** 2 + (start[1] - end[1]) ** 2)     # heuristic estimated cost to end Node (Euclidean)
     start_node.f = start_node.g + start_node.h
 
     end_node = Node(None, end)
-    end_node.g = 0       # set a large value if not defined
-    end_node.h = 0       # heuristic estimated cost to end Node
+    end_node.g = float('inf') # set a large value if not defined
+    end_node.h = 0 # heuristic estimated cost to end Node
     end_node.f = end_node.g + end_node.h
 
     # Initialize both yet_to_visit and visited dictionary
@@ -123,7 +124,7 @@ def search(maze, start, end):
     """
     # TODO PART 4 find maze has got how many rows and columns
     no_rows, no_columns = maze.shape
-
+    print(no_rows, " " ,no_columns)
     # Loop until you find the end
 
     while len(yet_to_visit_dict) > 0:
@@ -161,9 +162,8 @@ def search(maze, start, end):
 
             # TODO PART 4 Get node position
             node_position = (current_node.position[0] + new_position[0], current_node.position[1] + new_position[1])
-
             # TODO PART 4 Make sure within range (check if within maze boundary)
-            if (node_position[0] < 0 or node_position[0] >= no_columns or node_position[1] < 0 or node_position[1] >= no_rows):
+            if (node_position[0] < 0 or node_position[0] > no_rows or node_position[1] < 0 or node_position[1] > no_columns):
                 continue
 
             # Make sure walkable terrain
@@ -186,8 +186,8 @@ def search(maze, start, end):
 
             # TODO PART 4 Create the f, g, and h values
             child.g = current_node.g + 1
-            # Heuristic costs calculated here, this is using eucledian distance
-            child.h = child.h = sqrt((child.position[0] - end_node.position[0]) ** 2 + (child.position[1] - end_node.position[1]) ** 2)
+            child.h = child.h = sqrt((child.position[0] - end_node.position[0]) ** 2 + (child.position[1] - end_node.position[1]) ** 2) # euclidean distance
+            # child.h = child.h = abs(child.position[0] - end_node.position[0]) + abs(child.position[1] - end_node.position[1]) # manhattan distance
 
             child.f = child.g + child.h
 

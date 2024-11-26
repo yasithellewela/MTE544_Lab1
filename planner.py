@@ -31,7 +31,7 @@ class planner:
         # TODO PART 5 Create the cost-map, the laser_sig is 
         # the standard deviation for the gausiian for which
         # the mean is located on the occupant grid. 
-        self.m_utilites=mapManipulator(laser_sig=...)
+        self.m_utilites=mapManipulator(laser_sig=0.5)  # default value
             
         self.costMap=self.m_utilites.make_likelihood_field()
         
@@ -47,14 +47,15 @@ class planner:
         startPose=self.m_utilites.position_2_cell(startPoseCart)
         endPose=self.m_utilites.position_2_cell(endPoseCart)
         
+        path = search(self.costMap, startPose, endPose)
         # TODO PART 5 convert the cell pixels into the cartesian coordinates
         
-        Path = list(map(...))
+        Path = list(map(self.m_utilites.cell_2_position, path))
 
 
 
         # TODO PART 5 return the path as list of [x,y]
-        return ...
+        return Path
 
 
 
@@ -67,4 +68,10 @@ if __name__=="__main__":
 
     # you can use this part of the code to test your 
     # search algorithm regardless of the ros2 hassles
-    
+
+    test_planner = planner(TRAJECTORY_PLANNER)
+    # Example start and end positions in cartesian coordinates
+    start = (0.0, 0.0)  # Origin
+    end = (1.0, 1.0)    # Some target position
+    path = test_planner.plan(start, end)
+    print(f"Path found: {path}")

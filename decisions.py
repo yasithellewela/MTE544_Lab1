@@ -51,11 +51,13 @@ class decision_maker(Node):
 
         
         if motion_type==POINT_PLANNER:
+            # BONUS: USED OUR OWN PID VALUES
             self.controller=controller(klp=0.2, klv=0.5, kap=0.8, kav=0.6)      
             self.planner=planner(POINT_PLANNER)
 
         
         elif motion_type==TRAJECTORY_PLANNER:
+            # BONUS: USED OUR OWN PID VALUES
             # TODO PART 5 Bonus Put the gains that you conclude from lab 2
             self.controller=trajectoryController(klp=0.25, klv=0.25, kli=0.2, kap=0.65, kav=0.45, kai=0.2)     
             self.planner=planner(TRAJECTORY_PLANNER)

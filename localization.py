@@ -73,6 +73,7 @@ class localization(Node):
             
             # TODO PART 5 Bonus put the Q and R matrices
             # that you conclude from lab Three
+            # Did not use this part of the bonus
             Q= np.diag([1,1,1,1,1,1])*0.7
 
             R= np.diag([1,1,1,1])*0.3

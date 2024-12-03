@@ -95,7 +95,6 @@ def search(maze, start, end):
 
     # TODO PART 4 what squares do we search . serarch movement is left-right-top-bottom
     # (4 or 8 movements) from every positon
-    # might be wrong depedning on what sort of axis we are using - Yashraj
     move = [
         [0, 1],   # go up
         [-1, 0],  # go left
@@ -125,6 +124,7 @@ def search(maze, start, end):
                 d) else move the child to yet_to_visit dict
     """
     # TODO PART 4 find maze has got how many rows and columns
+    # Store the maze rows and columns
     no_rows, no_columns = maze.shape
     print(no_rows, " " ,no_columns)
     # Loop until you find the end

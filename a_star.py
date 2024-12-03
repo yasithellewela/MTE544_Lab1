@@ -46,6 +46,8 @@ def return_path(current_node, maze):
 
     return path
 
+def is_diagonal_move(current_pos, new_pos):
+    return abs(current_pos[0]- new_pos[0]) == 1 and abs(current_pos[1]-new_pos[1]) == 1
 
 def search(maze, start, end):
 
@@ -66,8 +68,8 @@ def search(maze, start, end):
     # Use None as parent if not defined
     start_node = Node(None, start)
     start_node.g = 0     # cost from start Node
-    # start_node.h = abs(start[0] - end[0]) + abs(start[1] - end[1]) # herusitic estimated cost to end Node (Manhattan)
-    start_node.h = sqrt((start[0] - end[0]) ** 2 + (start[1] - end[1]) ** 2)     # heuristic estimated cost to end Node (Euclidean)
+    start_node.h = abs(start[0] - end[0]) + abs(start[1] - end[1]) # herusitic estimated cost to end Node (Manhattan)
+    # start_node.h = sqrt((start[0] - end[0]) ** 2 + (start[1] - end[1]) ** 2)     # heuristic estimated cost to end Node (Euclidean)
     start_node.f = start_node.g + start_node.h
 
     end_node = Node(None, end)
@@ -184,10 +186,12 @@ def search(maze, start, end):
             if (visited_dict.get(child.position, False)):
                 continue
 
+            
+
             # TODO PART 4 Create the f, g, and h values
             child.g = current_node.g + 1
-            child.h = child.h = sqrt((child.position[0] - end_node.position[0]) ** 2 + (child.position[1] - end_node.position[1]) ** 2) # euclidean distance
-            # child.h = child.h = abs(child.position[0] - end_node.position[0]) + abs(child.position[1] - end_node.position[1]) # manhattan distance
+            # child.h = child.h = sqrt((child.position[0] - end_node.position[0]) ** 2 + (child.position[1] - end_node.position[1]) ** 2) # euclidean distance
+            child.h = child.h = abs(child.position[0] - end_node.position[0]) + abs(child.position[1] - end_node.position[1]) # manhattan distance
 
             child.f = child.g + child.h
 
